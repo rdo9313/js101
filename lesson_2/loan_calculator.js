@@ -111,8 +111,11 @@ function displayResults(
 
 console.clear();
 displayWelcomeMessage();
+displayLineBreak();
+askToContinue();
 
 while (true) {
+  console.clear();
   let amount = retrieveLoanAmount();
   amount = validateNum(amount);
   console.clear();
@@ -142,4 +145,5 @@ while (true) {
   if (["n", "no"].includes(answer)) break;
 }
 
+console.clear();
 displayGoodByeMessage();
