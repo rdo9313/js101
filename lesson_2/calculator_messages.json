@@ -1,0 +1,26 @@
+{
+  "en": {
+    "welcome": "Welcome to the Calculator!",
+    "firstNum": "What is the first number?",
+    "validNum": "Hmm... that doesn't look like a valid number.",
+    "secondNum": "What is the second number?",
+    "operations": "What operation would you like to perform?\n1) Add 2) Subract 3) Multiply 4) Divide",
+    "validateNum": "Must choose 1, 2, 3, 4",
+    "result": "The result is:",
+    "anotherCalc": "Would you like to perform another calculation? (y/n)",
+    "validateAnswer": "Hmm... that doesn't look like a valid answer.",
+    "goodbye": "Thank you for using the Calculator. See you again!"
+  },
+  "jp": {
+    "welcome": "電卓へようこそ!",
+    "firstNum": "最初の数字は？",
+    "validNum": "うーん...有効な数字には見えない。",
+    "secondNum": "番目の数字は？",
+    "operations": "どのような操作をしたいですか？\n1) 加算 2) 減算 3) 乗算 4) 除算",
+    "validateNum": "1、2、3、4を選択",
+    "result": "結果はこうだ:",
+    "anotherCalc": "別の計算を行いますか？(y/n)",
+    "validateAnswer": "うーん...有効な答えには見えない。",
+    "goodbye": "電卓をご利用いただきありがとうございました。またお会いしましょう！"
+  }
+}
