@@ -1,4 +1,8 @@
 {
+  "start": {
+    "chooseLanguage": "Please choose a language: English(en) or Japanese(jp)",
+    "validateLanguage": "Hmm... that doesn't look like a valid language."
+  },
   "en": {
     "welcome": "Welcome to the Calculator!",
     "firstNum": "What is the first number?",
@@ -9,6 +13,7 @@
     "result": "The result is:",
     "anotherCalc": "Would you like to perform another calculation? (y/n)",
     "validateAnswer": "Hmm... that doesn't look like a valid answer.",
+    "error": "Can not divide by 0",
     "goodbye": "Thank you for using the Calculator. See you again!"
   },
   "jp": {
@@ -21,6 +26,7 @@
     "result": "結果はこうだ:",
     "anotherCalc": "別の計算を行いますか？(y/n)",
     "validateAnswer": "うーん...有効な答えには見えない。",
+    "error": "0で割り切れない",
     "goodbye": "電卓をご利用いただきありがとうございました。またお会いしましょう！"
   }
 }
