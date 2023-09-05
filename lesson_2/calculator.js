@@ -84,23 +84,6 @@ while (true) {
   }
 
   let output = performCalculation(operation, num1, num2, language);
-  // switch (operation) {
-  //   case "1":
-  //     output = Number(num1) + Number(num2);
-  //     break;
-  //   case "2":
-  //     output = Number(num1) - Number(num2);
-  //     break;
-  //   case "3":
-  //     output = Number(num1) * Number(num2);
-  //     break;
-  //   case "4":
-  //     output =
-  //       Math.abs(num2) === 0
-  //         ? MESSAGES[language]["error"]
-  //         : Number(num1) / Number(num2);
-  //     break;
-  // }
 
   prompt("result", language, output);
 
