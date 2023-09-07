@@ -41,33 +41,38 @@ function validateLanguage() {
   return readline.question().toLowerCase();
 }
 
-function retrieveFirstNum(language) {
-  prompt("firstNum", language);
-  return readline.question();
-}
+// function retrieveFirstNum(language) {
+//   prompt("firstNum", language);
+//   return readline.question();
+// }
 
-function retrieveSecondNum(language) {
-  prompt("secondNum", language);
-  return readline.question();
-}
+// function retrieveSecondNum(language) {
+//   prompt("secondNum", language);
+//   return readline.question();
+// }
 
-function retrieveOperations(language) {
-  prompt("operations", language);
-  return readline.question();
-}
+// function retrieveOperations(language) {
+//   prompt("operations", language);
+//   return readline.question();
+// }
 
-function retrieveNewNum(language) {
-  prompt("validNum", language);
-  return readline.question();
-}
+// function retrieveNewNum(language) {
+//   prompt("validNum", language);
+//   return readline.question();
+// }
 
-function retrieveNewOperation(language) {
-  prompt("validateNum", language);
-  return readline.question();
-}
+// function retrieveNewOperation(language) {
+//   prompt("validateNum", language);
+//   return readline.question();
+// }
 
-function retrieveNewAnswer(language) {
-  prompt("validateAnswer", language);
+// function retrieveNewAnswer(language) {
+//   prompt("validateAnswer", language);
+//   return readline.question();
+// }
+
+function retrieve(string, language) {
+  prompt(string, language);
   return readline.question();
 }
 
@@ -118,22 +123,22 @@ while (true) {
   console.clear();
   displayWelcomeMessage(language);
 
-  let num1 = retrieveFirstNum(language);
+  let num1 = retrieve("firstNum", language);
 
   while (invalidNumber(num1)) {
-    num1 = retrieveNewNum(language);
+    num1 = retrieve("validNum", language);
   }
 
-  let num2 = retrieveSecondNum(language);
+  let num2 = retrieve("secondNum", language);
 
   while (invalidNumber(num2)) {
-    num2 = retrieveNewNum(language);
+    num2 = retrieve("validNum", language);
   }
 
-  let operation = retrieveOperations(language);
+  let operation = retrieve("operations", language);
 
   while (!["1", "2", "3", "4"].includes(operation)) {
-    operation = retrieveNewOperation(language);
+    operation = retrieve("validateNum", language);
   }
 
   let output = performCalculation(operation, num1, num2, language);
@@ -143,7 +148,7 @@ while (true) {
   let answer = repeatAgain(language);
 
   while (invalidYesOrNo(answer)) {
-    answer = retrieveNewAnswer(language);
+    answer = retrieve("validateAnswer", language);
   }
 
   if (["n", "no"].includes(answer.toLowerCase())) {
