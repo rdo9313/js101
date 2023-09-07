@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome to Car Loan Calculator!",
+  "goodbye": "Thank you for using the Car Loan Calculator. Have a great day!",
+  "requestLoan": "Please input the loan amount: ",
+  "requestAPR": "Please input the APR (2.5 for 2.5%, 5 for 5%): ",
+  "loanDuration": "Please input the loan duration (years): ",
+  "calculateAgain": "Would you like to calculate another loan payment (y/n)?",
+  "validAnswer": "Please input a valid answer (y/n): ",
+  "validNumber": "Please input a valid number (n >= 0): ",
+  "lineBreak": "----------------------------------------------------------",
+  "askToContinue": "Press enter to continue:",
+  "loanDetails": "Your Loan Details:"
+}

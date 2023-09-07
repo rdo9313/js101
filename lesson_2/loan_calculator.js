@@ -1,36 +1,41 @@
-//separate messages into json file
+//change answer to yesorno
+const MESSAGES = require("./car_loan_calculator_messages.json");
 const readline = require("readline-sync");
 const MONTHS_IN_YEAR = 12;
 
 function prompt(message) {
-  console.log(`=> ${message}`);
+  if (Object.keys(MESSAGES).includes(message)) {
+    console.log(`=> ${MESSAGES[message]}`);
+  } else {
+    console.log(`=> ${message}`);
+  }
 }
 
 function displayWelcomeMessage() {
-  prompt("Welcome to Car Loan Calculator!");
+  prompt("welcome");
 }
 
 function displayGoodByeMessage() {
-  prompt("Thank you for using the Car Loan Calculator. Have a great day!");
+  prompt("goodbye");
 }
 
 function retrieveLoanAmount() {
-  prompt("Please input the loan amount: ");
+  prompt("requestLoan");
   return readline.question();
 }
 
 function retrieveAPR() {
-  prompt("Please input the APR (2.5 for 2.5%, 5 for 5%): ");
+  prompt("requestAPR");
   return readline.question();
 }
 
 function retrieveDuration() {
-  prompt("Please input the loan duration (years): ");
+  prompt("loanDuration");
   return readline.question();
 }
 
 function retrieveAnswer() {
-  prompt("Would you like to calculate another loan payment (y/n)?");
+  prompt("calculateAgain");
   return readline.question();
 }
 
@@ -44,7 +49,7 @@ function isInvalidAnswer(answer) {
 
 function validateAnswer(answer) {
   while (isInvalidAnswer(answer)) {
-    prompt("Please input a valid answer (y/n): ");
+    prompt("validAnswer");
     answer = readline.question();
   }
   return answer;
@@ -52,7 +57,7 @@ function validateAnswer(answer) {
 
 function validateNum(num) {
   while (isInvalidNum(num)) {
-    prompt("Please input a valid number (n >= 0): ");
+    prompt("validNumber");
     num = readline.question();
   }
   return Number(num);
@@ -82,11 +87,11 @@ function calculateMonthlyPayment(amount, monthlyInterest, monthDuration) {
 }
 
 function displayLineBreak() {
-  prompt("----------------------------------------------------------");
+  prompt("lineBreak");
 }
 
 function askToContinue() {
-  prompt("Press enter to continue:");
+  prompt("askToContinue");
   readline.question();
   console.clear();
 }
@@ -98,7 +103,7 @@ function displayResults(
   yearDuration,
   monthlyPayment
 ) {
-  prompt("Your Loan Details:");
+  prompt("loanDetails");
   displayLineBreak();
   prompt(`Amount: $${amount}`);
   prompt(`APR: ${apr}%`);

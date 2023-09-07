@@ -1,12 +1,3 @@
-/*  1) Prettier autosaves the case statements into separate lines.
-    Should I disable auto-save and ignore its recommendations?
-    2) Should I leave console.clear() in while loop or in functions?
-    3) Should I separate prompts and readline into two separate functions?
-    4) Should I encapsulate the while loops within the main loop into functions
-    as well?
-    5) Refactor all retrieve functions to pass a string for first param and
-    interpolate into prompt argument?
-*/
 const MESSAGES = require("./calculator_messages.json");
 const readline = require("readline-sync");
 
