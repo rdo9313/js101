@@ -1,3 +1,4 @@
+//separate messages into json file
 const readline = require("readline-sync");
 const MONTHS_IN_YEAR = 12;
 

@@ -1,10 +1,26 @@
-// ask the user for the first number
-// ask the user for the second number
-// ask the user for the operation
-// perform the operation
-// display the result of the operation
+/*  1) Prettier autosaves the case statements into separate lines.
+    Should I disable auto-save and ignore its recommendations?
+    2) Should I leave console.clear() in while loop or in functions?
+    3) Should I separate prompts and readline into two separate functions?
+    4) Should I encapsulate the while loops within the main loop into functions
+    as well?
+    5) Refactor all retrieve functions to pass a string for first param and
+    interpolate into prompt argument?
+*/
 const MESSAGES = require("./calculator_messages.json");
 const readline = require("readline-sync");
+
+function displayWelcomeMessage(language) {
+  prompt("welcome", language);
+}
+
+function displayGoodByeMessage(language) {
+  prompt("goodbye", language);
+}
+
+function displayResult(language, output) {
+  prompt("result", language, output);
+}
 
 function prompt(key, language, output = "") {
   let message = messages(key, language);
@@ -15,16 +31,66 @@ function messages(message, lang = "start") {
   return MESSAGES[lang][message];
 }
 
+function chooseLanguage() {
+  prompt("chooseLanguage");
+  return readline.question().toLowerCase();
+}
+
+function validateLanguage() {
+  prompt("validateLanguage");
+  return readline.question().toLowerCase();
+}
+
+// function retrieveFirstNum(language) {
+//   prompt("firstNum", language);
+//   return readline.question();
+// }
+
+// function retrieveSecondNum(language) {
+//   prompt("secondNum", language);
+//   return readline.question();
+// }
+
+// function retrieveOperations(language) {
+//   prompt("operations", language);
+//   return readline.question();
+// }
+
+// function retrieveNewNum(language) {
+//   prompt("validNum", language);
+//   return readline.question();
+// }
+
+// function retrieveNewOperation(language) {
+//   prompt("validateNum", language);
+//   return readline.question();
+// }
+
+// function retrieveNewAnswer(language) {
+//   prompt("validateAnswer", language);
+//   return readline.question();
+// }
+
+function retrieve(string, language) {
+  prompt(string, language);
+  return readline.question();
+}
+
+function repeatAgain(language) {
+  prompt("anotherCalc", language);
+  return readline.question();
+}
+
 function invalidNumber(number) {
   return number.trimStart() === "" || Number.isNaN(Number(number));
 }
 
-function invalidAnswer(string) {
+function invalidYesOrNo(string) {
   return !["y", "yes", "n", "no"].includes(string.toLowerCase());
 }
 
 function invalidLanguage(language) {
-  return !["en", "english", "jp", "japanese"].includes(language.toLowerCase());
+  return !["en", "english", "jp", "japanese"].includes(language);
 }
 
 function performCalculation(operation, num1, num2, language) {
@@ -48,55 +114,45 @@ while (true) {
   let language;
   console.clear();
 
-  prompt("chooseLanguage");
-  language = readline.question();
+  language = chooseLanguage();
 
   while (invalidLanguage(language)) {
-    prompt("validateLanguage");
-    language = readline.question();
+    language = validateLanguage();
   }
 
   console.clear();
-  prompt("welcome", language);
+  displayWelcomeMessage(language);
 
-  prompt("firstNum", language);
-  let num1 = readline.question();
+  let num1 = retrieve("firstNum", language);
 
   while (invalidNumber(num1)) {
-    prompt("validNum", language);
-    num1 = readline.question();
+    num1 = retrieve("validNum", language);
   }
 
-  prompt("secondNum", language);
-  let num2 = readline.question();
+  let num2 = retrieve("secondNum", language);
 
   while (invalidNumber(num2)) {
-    prompt("validNum", language);
-    num2 = readline.question();
+    num2 = retrieve("validNum", language);
   }
 
-  prompt("operations", language);
-  let operation = readline.question();
+  let operation = retrieve("operations", language);
 
   while (!["1", "2", "3", "4"].includes(operation)) {
-    prompt("validateNum", language);
-    operation = readline.question();
+    operation = retrieve("validateNum", language);
   }
 
   let output = performCalculation(operation, num1, num2, language);
 
-  prompt("result", language, output);
+  displayResult(language, output);
 
-  prompt("anotherCalc", language);
-  let answer = readline.question();
+  let answer = repeatAgain(language);
 
-  while (invalidAnswer(answer)) {
-    prompt("validateAnswer", language);
-    answer = readline.question();
+  while (invalidYesOrNo(answer)) {
+    answer = retrieve("validateAnswer", language);
   }
 
   if (["n", "no"].includes(answer.toLowerCase())) {
-    prompt("goodbye", language);
+    displayGoodByeMessage(language);
     break;
   }
 }
