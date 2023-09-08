@@ -12,29 +12,36 @@ function prompt(message) {
 }
 
 function displayWelcomeMessage() {
+  console.clear();
   prompt("welcome");
+  displayLineBreak();
 }
 
 function displayGoodByeMessage() {
+  console.clear();
   prompt("goodbye");
 }
 
 function retrieveLoanAmount() {
+  console.clear();
   prompt("requestLoan");
   return readline.question();
 }
 
 function retrieveAPR() {
+  console.clear();
   prompt("requestAPR");
   return readline.question();
 }
 
 function retrieveDuration() {
+  console.clear();
   prompt("loanDuration");
   return readline.question();
 }
 
 function retrieveAnswer() {
+  console.clear();
   prompt("calculateAgain");
   return readline.question();
 }
@@ -52,7 +59,7 @@ function validateAnswer(answer) {
     prompt("validAnswer");
     answer = readline.question();
   }
-  return answer;
+  return answer.toLowerCase();
 }
 
 function validateNum(num) {
@@ -93,7 +100,6 @@ function displayLineBreak() {
 function askToContinue() {
   prompt("askToContinue");
   readline.question();
-  console.clear();
 }
 
 function displayResults(
@@ -103,6 +109,7 @@ function displayResults(
   yearDuration,
   monthlyPayment
 ) {
+  console.clear();
   prompt("loanDetails");
   displayLineBreak();
   prompt(`Amount: $${amount}`);
@@ -115,24 +122,18 @@ function displayResults(
   displayLineBreak();
 }
 
-console.clear();
 displayWelcomeMessage();
-displayLineBreak();
 askToContinue();
 
 while (true) {
-  console.clear();
   let amount = retrieveLoanAmount();
   amount = validateNum(amount);
-  console.clear();
 
   let apr = retrieveAPR();
   apr = validateNum(apr);
-  console.clear();
 
   let yearDuration = retrieveDuration();
   yearDuration = validateNum(yearDuration);
-  console.clear();
 
   let monthlyInterest = calculateMonthlyInterest(apr);
   let monthDuration = calculateMonthDuration(yearDuration);
@@ -151,5 +152,4 @@ while (true) {
   if (["n", "no"].includes(answer)) break;
 }
 
-console.clear();
 displayGoodByeMessage();

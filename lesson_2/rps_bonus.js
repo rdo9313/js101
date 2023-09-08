@@ -13,6 +13,33 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
+function askToContinue() {
+  prompt("Please press enter to continue:");
+  readline.question();
+}
+
+function displayWelcomeMessage() {
+  console.clear();
+  prompt("Welcome to Rock Paper Scissors Lizard Spock!");
+  prompt(
+    `For the full explanation and rules of this game, please go here:
+  https://web.archive.org/web/20181217114425/http://www.samkass.com/theories/RPSSL.html`
+  );
+  prompt(
+    `First player to ${WINNING_SCORE} wins is declared the winner. Good luck!`
+  );
+  displayLineBreak();
+}
+
+function displayGoodByeMessage() {
+  console.clear();
+  prompt("Thank you for playing RPSLS. Have a great day!");
+}
+
+function displayLineBreak() {
+  prompt("-----------------------------------------------------------------");
+}
+
 function convertChoice(choice) {
   choice = choice.toLowerCase();
   switch (choice) {
@@ -31,7 +58,15 @@ function convertChoice(choice) {
   }
 }
 
+function displayScore(score) {
+  displayLineBreak();
+  prompt(`Your score: ${score["player"]}
+   Computer score: ${score["computer"]}`);
+  displayLineBreak();
+}
+
 function displayWinner(choice, computerChoice) {
+  console.clear();
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
   if (determineWinner(choice, computerChoice) === "player") {
     prompt("You win!");
@@ -62,6 +97,10 @@ function formatChoiceDisplay() {
   });
 }
 
+function isValidPlayAgain(playAgain) {
+  return ["y", "yes", "n", "no"].includes(playAgain);
+}
+
 function updateScore(choice, computerChoice, score) {
   if (determineWinner(choice, computerChoice) === "player") {
     score["player"] += 1;
@@ -71,18 +110,44 @@ function updateScore(choice, computerChoice, score) {
 }
 
 function retrieveChoice() {
+  console.clear();
   prompt(`Choose between ${formatChoiceDisplay().join(", ")}:`);
   return readline.question();
 }
 
+function retrieveValidChoice() {
+  prompt("That's not a valid choice.");
+  return readline.question();
+}
+
+function retrievePlayAgain(score) {
+  console.clear();
+  if (score["player"] === 3) {
+    prompt("Congratulations! You took the computer down!");
+  } else {
+    prompt("Computer won. Better luck next time!");
+  }
+  prompt("Would you like to play again (y/n)?");
+  return readline.question().toLowerCase();
+}
+
+function retrieveValidPlayAgain() {
+  prompt("Please input a valid answer (y/n):");
+  return readline.question().toLowerCase();
+}
+
+displayWelcomeMessage();
+askToContinue();
+
 while (true) {
   let score = { player: 0, computer: 0 };
-  while (Math.max(...Object.values(score)) < 3) {
+
+  while (Math.max(...Object.values(score)) < WINNING_SCORE) {
     let choice = retrieveChoice();
     choice = convertChoice(choice);
+
     while (!VALID_CHOICES.includes(choice)) {
-      prompt("That's not a valid choice.");
-      choice = readline.question();
+      choice = retrieveValidChoice();
       choice = convertChoice(choice);
     }
 
@@ -91,15 +156,16 @@ while (true) {
 
     displayWinner(choice, computerChoice);
     updateScore(choice, computerChoice, score);
-    console.log(`${score["player"]}:${score["computer"]}`);
+    displayScore(score);
+    askToContinue();
   }
 
-  prompt("Do you want to play again (y/n)?");
-  let answer = readline.question().toLowerCase();
-  while (answer[0] !== "n" && answer[0] !== "y") {
-    prompt('Please enter "y" or "n".');
-    answer = readline.question().toLowerCase();
+  let playAgain = retrievePlayAgain(score);
+  while (!isValidPlayAgain(playAgain)) {
+    playAgain = retrieveValidPlayAgain();
   }
 
-  if (answer[0] !== "y") break;
+  if (["n", "no"].includes(playAgain)) break;
 }
+
+displayGoodByeMessage();
