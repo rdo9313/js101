@@ -27,38 +27,53 @@ function chooseLanguage() {
   return readline.question().toLowerCase();
 }
 
+function getAndValidateLanguage() {
+  let language = chooseLanguage();
+
+  while (invalidLanguage(language)) {
+    language = validateLanguage();
+  }
+
+  return language;
+}
+
+function getAndValidateNum(string, language) {
+  let num = retrieve(string, language);
+
+  while (invalidNumber(num)) {
+    num = retrieve("validNum", language);
+  }
+
+  return num;
+}
+
+function getAndValidateOperation(language) {
+  let operation = retrieve("operations", language);
+
+  while (!["1", "2", "3", "4"].includes(operation)) {
+    operation = retrieve("validateNum", language);
+  }
+
+  return operation;
+}
+
+function getAndValidateAnswer(language) {
+  let answer = repeatAgain(language);
+
+  while (invalidYesOrNo(answer)) {
+    answer = retrieve("validateAnswer", language);
+  }
+
+  return answer;
+}
+
 function validateLanguage() {
   prompt("validateLanguage");
   return readline.question().toLowerCase();
 }
 
-function retrieveFirstNum(language) {
-  prompt("firstNum", language);
-  return readline.question();
-}
-
-function retrieveSecondNum(language) {
-  prompt("secondNum", language);
-  return readline.question();
-}
-
-function retrieveOperations(language) {
-  prompt("operations", language);
-  return readline.question();
-}
-
-function retrieveNewNum(language) {
-  prompt("validNum", language);
-  return readline.question();
-}
-
-function retrieveNewOperation(language) {
-  prompt("validateNum", language);
-  return readline.question();
-}
-
-function retrieveNewAnswer(language) {
-  prompt("validateAnswer", language);
+function retrieve(string, language) {
+  prompt(string, language);
   return readline.question();
 }
 
@@ -80,62 +95,34 @@ function invalidLanguage(language) {
 }
 
 function performCalculation(operation, num1, num2, language) {
+  // prettier-ignore
   switch (operation) {
-    case "1":
-      return Number(num1) + Number(num2);
-    case "2":
-      return Number(num1) - Number(num2);
-    case "3":
-      return Number(num1) * Number(num2);
-    case "4":
-      return Math.abs(num2) === 0
-        ? MESSAGES[language]["error"]
-        : Number(num1) / Number(num2);
-    default:
-      return "No calculation here.";
+    case "1": return Number(num1) + Number(num2);
+    case "2": return Number(num1) - Number(num2);
+    case "3": return Number(num1) * Number(num2);
+    case "4": return Math.abs(num2) === 0
+      ? MESSAGES[language]["error"]
+      : Number(num1) / Number(num2);
+    default: return "No calculation here.";
   }
 }
 
 while (true) {
-  let language;
+  console.clear();
+  let language = getAndValidateLanguage();
   console.clear();
 
-  language = chooseLanguage();
-
-  while (invalidLanguage(language)) {
-    language = validateLanguage();
-  }
-
-  console.clear();
   displayWelcomeMessage(language);
 
-  let num1 = retrieveFirstNum(language);
+  let num1 = getAndValidateNum("firstNum", language);
+  let num2 = getAndValidateNum("secondNum", language);
 
-  while (invalidNumber(num1)) {
-    num1 = retrieveNewNum(language);
-  }
-
-  let num2 = retrieveSecondNum(language);
-
-  while (invalidNumber(num2)) {
-    num2 = retrieveNewNum(language);
-  }
-
-  let operation = retrieveOperations(language);
-
-  while (!["1", "2", "3", "4"].includes(operation)) {
-    operation = retrieveNewOperation(language);
-  }
-
+  let operation = getAndValidateOperation(language);
   let output = performCalculation(operation, num1, num2, language);
 
   displayResult(language, output);
 
-  let answer = repeatAgain(language);
-
-  while (invalidYesOrNo(answer)) {
-    answer = retrieveNewAnswer(language);
-  }
+  let answer = getAndValidateAnswer(language);
 
   if (["n", "no"].includes(answer.toLowerCase())) {
     displayGoodByeMessage(language);
