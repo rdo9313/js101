@@ -5,8 +5,9 @@
   "requestAPR": "Please input the APR (2.5 for 2.5%, 5 for 5%): ",
   "loanDuration": "Please input the loan duration (years): ",
   "calculateAgain": "Would you like to calculate another loan payment (y/n)?",
-  "validAnswer": "Please input a valid answer (y/n): ",
+  "validCalculateAgain": "Please input a valid answer (y/n): ",
   "validNumber": "Please input a valid number (n >= 0): ",
+  "validAmount": "Please input a valid amount (n >= 0) and up to two decimals: ",
   "lineBreak": "----------------------------------------------------------",
   "askToContinue": "Press enter to continue:",
   "loanDetails": "Your Loan Details:"

@@ -12,54 +12,56 @@ function prompt(message) {
 }
 
 function displayWelcomeMessage() {
-  console.clear();
   prompt("welcome");
   displayLineBreak();
 }
 
 function displayGoodByeMessage() {
-  console.clear();
   prompt("goodbye");
-}
-
-function retrieveLoanAmount() {
-  console.clear();
-  prompt("requestLoan");
-  return readline.question();
-}
-
-function retrieveAPR() {
-  console.clear();
-  prompt("requestAPR");
-  return readline.question();
-}
-
-function retrieveDuration() {
-  console.clear();
-  prompt("loanDuration");
-  return readline.question();
-}
-
-function retrieveAnswer() {
-  console.clear();
-  prompt("calculateAgain");
-  return readline.question();
 }
 
 function isInvalidNum(num) {
   return num.trim() === "" || Number(num) < 0 || Number.isNaN(Number(num));
 }
 
-function isInvalidAnswer(answer) {
-  return !["y", "yes", "n", "no"].includes(answer.toLowerCase());
+function isInvalidAmount(num) {
+  return num.split(".")[1] && num.split(".")[1].length > 2;
 }
 
-function validateAnswer(answer) {
-  while (isInvalidAnswer(answer)) {
-    prompt("validAnswer");
-    answer = readline.question();
+function isInvalidCalculateAgain(input) {
+  return !["y", "yes", "n", "no"].includes(input.toLowerCase());
+}
+
+function retrieve(string) {
+  prompt(string);
+  return readline.question();
+}
+
+function getAndValidateAmount() {
+  let amount = retrieve("requestLoan");
+
+  while (isInvalidNum(amount) || isInvalidAmount(amount)) {
+    prompt("validAmount");
+    amount = readline.question();
   }
-  return answer.toLowerCase();
+
+  return Number(amount);
+}
+
+function getAndValidateNum(input) {
+  let num = retrieve(input);
+  return validateNum(num);
+}
+
+function getAndValidateCalculateAgain() {
+  let input = retrieve("calculateAgain");
+
+  while (isInvalidCalculateAgain(input)) {
+    prompt("validCalculateAgain");
+    input = readline.question();
+  }
+
+  return input.toLowerCase();
 }
 
 function validateNum(num) {
@@ -109,7 +111,6 @@ function displayResults(
   yearDuration,
   monthlyPayment
 ) {
-  console.clear();
   prompt("loanDetails");
   displayLineBreak();
   prompt(`Amount: $${amount}`);
@@ -122,18 +123,19 @@ function displayResults(
   displayLineBreak();
 }
 
+console.clear();
 displayWelcomeMessage();
 askToContinue();
 
 while (true) {
-  let amount = retrieveLoanAmount();
-  amount = validateNum(amount);
+  console.clear();
+  let amount = getAndValidateAmount();
 
-  let apr = retrieveAPR();
-  apr = validateNum(apr);
+  console.clear();
+  let apr = getAndValidateNum("requestAPR");
 
-  let yearDuration = retrieveDuration();
-  yearDuration = validateNum(yearDuration);
+  console.clear();
+  let yearDuration = getAndValidateNum("loanDuration");
 
   let monthlyInterest = calculateMonthlyInterest(apr);
   let monthDuration = calculateMonthDuration(yearDuration);
@@ -143,13 +145,15 @@ while (true) {
     monthDuration
   );
 
+  console.clear();
   displayResults(amount, apr, monthDuration, yearDuration, monthlyPayment);
   askToContinue();
 
-  let answer = retrieveAnswer();
-  answer = validateAnswer(answer);
+  console.clear();
+  let calculateAgain = getAndValidateCalculateAgain();
 
-  if (["n", "no"].includes(answer)) break;
+  if (["n", "no"].includes(calculateAgain)) break;
 }
 
+console.clear();
 displayGoodByeMessage();
