@@ -19,7 +19,6 @@ function askToContinue() {
 }
 
 function displayWelcomeMessage() {
-  console.clear();
   prompt("Welcome to Rock Paper Scissors Lizard Spock!");
   prompt(
     `For the full explanation and rules of this game, please go here:
@@ -32,7 +31,6 @@ function displayWelcomeMessage() {
 }
 
 function displayGoodByeMessage() {
-  console.clear();
   prompt("Thank you for playing RPSLS. Have a great day!");
 }
 
@@ -66,7 +64,6 @@ function displayScore(score) {
 }
 
 function displayWinner(choice, computerChoice) {
-  console.clear();
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
   if (determineWinner(choice, computerChoice) === "player") {
     prompt("You win!");
@@ -74,6 +71,14 @@ function displayWinner(choice, computerChoice) {
     prompt("Computer wins!");
   } else {
     prompt("It's a tie!");
+  }
+}
+
+function displayFinalWinner(score) {
+  if (score["player"] === 3) {
+    prompt("Congratulations! You took the computer down!");
+  } else {
+    prompt("Computer won. Better luck next time!");
   }
 }
 
@@ -97,6 +102,33 @@ function formatChoiceDisplay() {
   });
 }
 
+function getAndValidateChoice() {
+  let choice = retrieveChoice();
+  choice = convertChoice(choice);
+
+  while (!VALID_CHOICES.includes(choice)) {
+    choice = retrieveValidChoice();
+    choice = convertChoice(choice);
+  }
+
+  return choice;
+}
+
+function getAndValidatePlayAgain() {
+  let playAgain = retrievePlayAgain();
+
+  while (!isValidPlayAgain(playAgain)) {
+    playAgain = retrieveValidPlayAgain();
+  }
+
+  return playAgain;
+}
+
+function generateRandomChoice() {
+  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+  return VALID_CHOICES[randomIndex];
+}
+
 function isValidPlayAgain(playAgain) {
   return ["y", "yes", "n", "no"].includes(playAgain);
 }
@@ -110,7 +142,6 @@ function updateScore(choice, computerChoice, score) {
 }
 
 function retrieveChoice() {
-  console.clear();
   prompt(`Choose between ${formatChoiceDisplay().join(", ")}:`);
   return readline.question();
 }
@@ -120,13 +151,7 @@ function retrieveValidChoice() {
   return readline.question();
 }
 
-function retrievePlayAgain(score) {
-  console.clear();
-  if (score["player"] === 3) {
-    prompt("Congratulations! You took the computer down!");
-  } else {
-    prompt("Computer won. Better luck next time!");
-  }
+function retrievePlayAgain() {
   prompt("Would you like to play again (y/n)?");
   return readline.question().toLowerCase();
 }
@@ -136,6 +161,7 @@ function retrieveValidPlayAgain() {
   return readline.question().toLowerCase();
 }
 
+console.clear();
 displayWelcomeMessage();
 askToContinue();
 
@@ -143,29 +169,23 @@ while (true) {
   let score = { player: 0, computer: 0 };
 
   while (Math.max(...Object.values(score)) < WINNING_SCORE) {
-    let choice = retrieveChoice();
-    choice = convertChoice(choice);
+    console.clear();
+    let choice = getAndValidateChoice();
+    let computerChoice = generateRandomChoice();
 
-    while (!VALID_CHOICES.includes(choice)) {
-      choice = retrieveValidChoice();
-      choice = convertChoice(choice);
-    }
-
-    let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-    let computerChoice = VALID_CHOICES[randomIndex];
-
+    console.clear();
     displayWinner(choice, computerChoice);
     updateScore(choice, computerChoice, score);
     displayScore(score);
     askToContinue();
   }
 
-  let playAgain = retrievePlayAgain(score);
-  while (!isValidPlayAgain(playAgain)) {
-    playAgain = retrieveValidPlayAgain();
-  }
+  console.clear();
+  displayFinalWinner(score);
+  let playAgain = getAndValidatePlayAgain();
 
   if (["n", "no"].includes(playAgain)) break;
 }
 
+console.clear();
 displayGoodByeMessage();

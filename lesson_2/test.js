@@ -1,9 +1,7 @@
-function capitalize() {
-  return word[0].toUpperCase() + word.slice(1);
+let boo = "gar";
+
+function setBoo() {
+  boo = "xyz";
 }
 
-let word = "hello";
-while (true) {
-  capitalize(word);
-  break;
-}
+console.log(boo);
