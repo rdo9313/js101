@@ -1,4 +1,3 @@
-//change answer to yesorno
 const MESSAGES = require("./car_loan_calculator_messages.json");
 const readline = require("readline-sync");
 const MONTHS_IN_YEAR = 12;
