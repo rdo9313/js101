@@ -19,8 +19,20 @@ function displayGoodByeMessage() {
   prompt("goodbye");
 }
 
+function isEmpty(num) {
+  return num.trim() === "";
+}
+
+function isNegative(num) {
+  return Number(num) < 0;
+}
+
+function isNaN(num) {
+  return Number.isNaN(Number(num));
+}
+
 function isInvalidNum(num) {
-  return num.trim() === "" || Number(num) < 0 || Number.isNaN(Number(num));
+  return isEmpty(num) || isNegative(num) || isNaN(num);
 }
 
 function isInvalidAmount(num) {
@@ -31,13 +43,13 @@ function isInvalidCalculateAgain(input) {
   return !["y", "yes", "n", "no"].includes(input.toLowerCase());
 }
 
-function retrieve(string) {
+function getUserInput(string) {
   prompt(string);
   return readline.question();
 }
 
 function getAndValidateAmount() {
-  let amount = retrieve("requestLoan");
+  let amount = getUserInput("requestLoan");
 
   while (isInvalidNum(amount) || isInvalidAmount(amount)) {
     prompt("validAmount");
@@ -48,12 +60,12 @@ function getAndValidateAmount() {
 }
 
 function getAndValidateNum(input) {
-  let num = retrieve(input);
+  let num = getUserInput(input);
   return validateNum(num);
 }
 
 function getAndValidateCalculateAgain() {
-  let input = retrieve("calculateAgain");
+  let input = getUserInput("calculateAgain");
 
   while (isInvalidCalculateAgain(input)) {
     prompt("validCalculateAgain");
