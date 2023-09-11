@@ -38,21 +38,16 @@ function displayLineBreak() {
   prompt("-----------------------------------------------------------------");
 }
 
+// prettier-ignore
 function convertChoice(choice) {
   choice = choice.toLowerCase();
   switch (choice) {
-    case "r":
-      return "rock";
-    case "p":
-      return "paper";
-    case "s":
-      return "scissors";
-    case "l":
-      return "lizard";
-    case "sp":
-      return "spock";
-    default:
-      return choice;
+    case "r": return "rock";
+    case "p": return "paper";
+    case "s": return "scissors";
+    case "l": return "lizard";
+    case "sp": return "spock";
+    default: return choice;
   }
 }
 
