@@ -8,6 +8,9 @@ const WINNING_COMBOS = {
 };
 const WINNING_SCORE = 3;
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
+const PLAYER = "player";
+const COMPUTER = "computer";
+const TIE = "tie";
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -53,24 +56,26 @@ function convertChoice(choice) {
 
 function displayScore(score) {
   displayLineBreak();
-  prompt(`Your score: ${score["player"]}
-   Computer score: ${score["computer"]}`);
+  prompt(`Your score: ${score[PLAYER]}
+   Computer score: ${score[COMPUTER]}`);
   displayLineBreak();
 }
 
 function displayWinner(choice, computerChoice) {
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
-  if (determineWinner(choice, computerChoice) === "player") {
+  if (determineWinner(choice, computerChoice) === PLAYER) {
     prompt("You win!");
-  } else if (determineWinner(choice, computerChoice) === "computer") {
+  } else if (determineWinner(choice, computerChoice) === COMPUTER) {
     prompt("Computer wins!");
-  } else {
+  } else if (determineWinner(choice, computerChoice) === TIE) {
     prompt("It's a tie!");
+  } else {
+    console.log("There is a problem.");
   }
 }
 
 function displayFinalWinner(score) {
-  if (score["player"] === 3) {
+  if (score[PLAYER] === WINNING_SCORE) {
     prompt("Congratulations! You took the computer down!");
   } else {
     prompt("Computer won. Better luck next time!");
@@ -79,11 +84,11 @@ function displayFinalWinner(score) {
 
 function determineWinner(choice, computerChoice) {
   if (WINNING_COMBOS[choice].includes(computerChoice)) {
-    return "player";
+    return PLAYER;
   } else if (WINNING_COMBOS[computerChoice].includes(choice)) {
-    return "computer";
+    return COMPUTER;
   } else {
-    return "tie";
+    return TIE;
   }
 }
 
@@ -98,11 +103,11 @@ function formatChoiceDisplay() {
 }
 
 function getAndValidateChoice() {
-  let choice = retrieveChoice();
+  let choice = getUserChoice();
   choice = convertChoice(choice);
 
   while (!VALID_CHOICES.includes(choice)) {
-    choice = retrieveValidChoice();
+    choice = getUserValidChoice();
     choice = convertChoice(choice);
   }
 
@@ -110,10 +115,10 @@ function getAndValidateChoice() {
 }
 
 function getAndValidatePlayAgain() {
-  let playAgain = retrievePlayAgain();
+  let playAgain = getUserPlayAgain();
 
   while (!isValidPlayAgain(playAgain)) {
-    playAgain = retrieveValidPlayAgain();
+    playAgain = getUserValidPlayAgain();
   }
 
   return playAgain;
@@ -129,29 +134,29 @@ function isValidPlayAgain(playAgain) {
 }
 
 function updateScore(choice, computerChoice, score) {
-  if (determineWinner(choice, computerChoice) === "player") {
-    score["player"] += 1;
-  } else if (determineWinner(choice, computerChoice) === "computer") {
-    score["computer"] += 1;
+  if (determineWinner(choice, computerChoice) === PLAYER) {
+    score[PLAYER] += 1;
+  } else if (determineWinner(choice, computerChoice) === COMPUTER) {
+    score[COMPUTER] += 1;
   }
 }
 
-function retrieveChoice() {
+function getUserChoice() {
   prompt(`Choose between ${formatChoiceDisplay().join(", ")}:`);
   return readline.question();
 }
 
-function retrieveValidChoice() {
+function getUserValidChoice() {
   prompt("That's not a valid choice.");
   return readline.question();
 }
 
-function retrievePlayAgain() {
+function getUserPlayAgain() {
   prompt("Would you like to play again (y/n)?");
   return readline.question().toLowerCase();
 }
 
-function retrieveValidPlayAgain() {
+function getUserValidPlayAgain() {
   prompt("Please input a valid answer (y/n):");
   return readline.question().toLowerCase();
 }
